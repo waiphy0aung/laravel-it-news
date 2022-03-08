@@ -70,6 +70,9 @@
                     <div id="category" class="mb-5">
                         <h4 class="fw-bolder">Category Lists</h4>
                         <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="{{ route("index") }}" class="{{ request()->url() == route("index") ? "active" : "" }}">All</a>
+                            </li>
                             @foreach($categories as $category)
                             <li class="list-group-item">
                                 <a href="{{ route("baseOnCategory",$category->id) }}" class="{{ request()->url() == route("baseOnCategory",$category->id) ? "active" : "" }}">{{ $category->title }}</a>

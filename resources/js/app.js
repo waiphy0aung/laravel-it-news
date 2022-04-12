@@ -1,5 +1,6 @@
 require('./bootstrap');
 
+window.Swal = require('sweetalert2')
 
 $(".show-sidebar-btn").click(function () {
     $(".sidebar").animate({marginLeft:0});

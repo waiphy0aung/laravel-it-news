@@ -1,16 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Padauk:wght@400;700&display=swap');
-@import "~bootstrap5/scss/bootstrap";
-@import "feather-icons-web/feather.css";
-
-
+$primary : #118ab2;
 $secondary : #cccccc;
 
 
 $font-family-sans-serif : 'Montserrat', 'Padauk',sans-serif;
 $nav-link-font-weight : bold;
+@import "~bootstrap5/scss/bootstrap";
+@import "feather-icons-web/feather.css";
+
+
+
+input:focus{
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+.btn-check:focus + .btn,.btn:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.user-img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
 
 .navbar-brand img{
-    filter: drop-shadow(0 3px rgba(0,0,0,0.2));
 }
 
 .article-preview:last-child{

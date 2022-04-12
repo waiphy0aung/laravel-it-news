@@ -19,6 +19,7 @@
 
                         <br>
                     {{ Request::url() }}
+                        <button class="btn btn-primary test-toast">Test Toast</button>
 
                 </div>
             </div>
@@ -30,6 +31,24 @@
     <script>
         $(".test").click(function (){
             alert("hello");
+        })
+        $(".test-toast").click(function (){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Signed in successfully'
+            })
         })
     </script>
 @endsection

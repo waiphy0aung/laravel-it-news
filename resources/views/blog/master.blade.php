@@ -24,14 +24,48 @@
             <i class="feather-align-right"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul id="menu-top-right-menu" class="navbar-nav ms-auto mb-2 mb-md-0 ">
+            <ul id="menu-top-right-menu" class="navbar-nav ms-auto mb-2 mb-md-0 align-items-center">
                 <li id="menu-item-12"
                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home nav-item nav-item-12">
                     <a href="{{ route("index") }}" class="nav-link {{ request()->url() == route("index")? "active" : ""}}">Home</a></li>
+                @guest
                 <li id="menu-item-16"
                     class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-16"><a
-                        href="{{ route("about") }}" class="nav-link {{ request()->url() == route("about")? "active" : ""}}">About</a>
+                        href="{{ route("login") }}" class="nav-link">Login</a>
                 </li>
+                <li id="menu-item-16"
+                    class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-16"><a
+                        href="{{ route("register") }}" class="nav-link">
+                        <button class="btn btn-primary rounded-pill text-white">Register</button>
+                    </a>
+                </li>
+                @else
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{{ isset(Auth::user()->photo) ? asset('storage/profile/'.Auth::user()->photo) : asset('dashboard/img/user-default-photo.png') }}" class="user-img shadow-sm" alt="">
+                                <span class="ml-0 ml-md-2 d-none d-md-inline-block">
+                                    {{ Auth::user()->name }}
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                        logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                @endguest
             </ul>
         </div>
     </div>
@@ -70,6 +104,9 @@
                     <div id="category" class="mb-5">
                         <h4 class="fw-bolder">Category Lists</h4>
                         <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="{{ route("index") }}" class="{{ request()->url() == route("index")? "active" : "" }}">All</a>
+                            </li>
                             @foreach($categories as $category)
                             <li class="list-group-item">
                                 <a href="{{ route("baseOnCategory",$category->id) }}" class="{{ request()->url() == route("baseOnCategory",$category->id) ? "active" : "" }}">{{ $category->title }}</a>
@@ -92,7 +129,7 @@
                     <div class="text-center">
                         Copyright © {{ date('Y') }} {{ \App\Base::$name }}
                     </div>
-                    <a href="#themeHeaderSpacer" class="btn btn-primary">
+                    <a href="#themeHeaderSpacer" class="btn btn-primary text-white">
                         <i class="feather-arrow-up"></i>
                     </a>
                 </div>

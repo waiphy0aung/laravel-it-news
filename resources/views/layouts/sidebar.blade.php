@@ -1,7 +1,7 @@
 <div class="col-12 col-lg-3 col-xl-2 vh-100 sidebar">
-    <div class="d-flex justify-content-between align-items-center py-2 mt-3 nav-brand">
+    <div class="d-flex justify-content-between align-items-center mt-3 nav-brand">
         <div class="d-flex align-items-center">
-            <img src="{{ asset(\App\Base::$logo) }}" class="w-50" alt="">
+            <img src="{{ asset(\App\Base::$logo) }}" class="w-75" alt="">
         </div>
         <button class="hide-sidebar-btn btn btn-light d-block d-lg-none">
             <i class="feather-x text-primary" style="font-size: 2em;"></i>
@@ -12,18 +12,24 @@
 
             <x-menu-spacer></x-menu-spacer>
 
-            <x-menu-item name="Home" class="feather-home" link="{{ route('home') }}"></x-menu-item>
+            <a href="{{ route('index') }}" class="">
+                <button class="btn btn-outline-primary w-100">
+                    <i class="feather-corner-up-left"></i>
+                    Go To News Feed
+                </button>
+            </a>
 
-            <x-menu-spacer></x-menu-spacer>
-
-            <x-menu-title title="My Test Menu"></x-menu-title>
-            <x-menu-item name="Create Item" class="feather-plus-circle" ></x-menu-item>
-            <x-menu-item name="Item List" class="feather-list" counter="50"></x-menu-item>
-
-            <x-menu-spacer></x-menu-spacer>
+            @if(Auth::user()->role == 0)
+                <x-menu-spacer></x-menu-spacer>
+                <x-menu-title title="User Manager"></x-menu-title>
+                <x-menu-item name="Users" class="feather-users" link="{{ route('user-manager.index') }}"></x-menu-item>
+                <x-menu-spacer></x-menu-spacer>
+            @endif
 
             <x-menu-title title="Article Manager"></x-menu-title>
+            @if(Auth::user()->role == 0)
             <x-menu-item name="Manage Category" class="feather-layers" link="{{ route('category.index') }}" ></x-menu-item>
+            @endif
             <x-menu-item name="Article List" class="feather-list" link="{{ route('article.index') }}" ></x-menu-item>
             <x-menu-item name="Create Article" class="feather-plus-circle" link="{{ route('article.create') }}" ></x-menu-item>
 

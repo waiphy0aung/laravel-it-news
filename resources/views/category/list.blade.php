@@ -15,10 +15,10 @@
             <td>{{ $c->title }}</td>
             <td>{{ $c->user->name }}</td>
             <td>
-                <form action="{{ route("category.destroy",$c->id) }}" method="post" class="d-inline-block">
+                <form action="{{ route("category.destroy",$c->id) }}" id="form{{ $c->id }}" method="post" class="d-inline-block">
                     @csrf
                     @method("delete")
-                    <button class="btn btn-outline-danger" onclick="return confirm('Are you sure to delete {{ $c->title }} category?')"><i class="feather-trash"></i> Delete</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="askConfirm({{ $c->id }})"><i class="feather-trash"></i> Delete</button>
                 </form>
                 <a href="{{ route("category.edit",$c->id) }}" class="btn btn-outline-primary"><i class="feather-edit"></i> Edit</a>
             </td>

@@ -22,9 +22,20 @@ Route::get("/date/{date}","BlogController@baseOnDate")->name("baseOnDate");
 Auth::routes();
 Route::view("/about","blog.about")->name("about");
 
-Route::prefix('/dashboard')->middleware('auth')->group(function (){
+Route::prefix('/dashboard')->middleware(['auth','IsBanned'])->group(function (){
+
+    Route::middleware("AdminOnly")->group(function (){
+        Route::get('user-manager','UserManagerController@index')->name('user-manager.index');
+        Route::resource('/category','CategoryController');
+
+    });
+
+    Route::post("/make-admin","UserManagerController@makeAdmin")->name("user-manager.makeAdmin");
+    Route::post("/ban-user","UserManagerController@banUser")->name("user-manager.ban-user");
+    Route::post("/unban-user","UserManagerController@unbanUser")->name("user-manager.unban-user");
+    Route::post("/change-user-password","UserManagerController@changeUserPassword")->name("user-manager.changeUserPassword");
+
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('/category','CategoryController');
     Route::resource('/article','ArticleController');
 
     Route::prefix('profile')->group(function(){

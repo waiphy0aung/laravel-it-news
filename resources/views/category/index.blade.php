@@ -20,7 +20,7 @@
                         @csrf
                         <div class="form-inline">
                             <input type="text" placeholder="New Category" name="title" value="{{ old("title") }}" class="form-control @error('title') is-invalid @enderror form-control-lg mr-2">
-                            <button class="btn btn-lg btn-primary">Add</button>
+                            <button class="btn btn-lg btn-primary" >Add</button>
                         </div>
                         @error("title")
                         <small class="text-danger font-weight-bold text-center">{{ $message }}</small>
@@ -34,4 +34,30 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('foot')
+    <script>
+        function askConfirm(id){
+            Swal.fire({
+                title: 'Are you sure <br> to delete this Category?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'confirm'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Category Deleted!',
+                        'category has been deleted successfully',
+                        'success'
+                    )
+                    setTimeout(function (){
+                        $("#form"+id).submit();
+                    },500)
+                }
+            })
+        }
+    </script>
 @endsection

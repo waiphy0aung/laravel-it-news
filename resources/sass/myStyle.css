@@ -74,6 +74,16 @@
     z-index: 2000;
 }
 
+input:focus{
+    box-shadow: none !important;
+    border-color: black !important;
+}
+
+.btn-check:focus + .btn,.btn:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
+
 .user-img{
     width: 30px;
     height: 30px;

@@ -16,11 +16,20 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::when(isset(request()->search),function ($q){
-            $search = request()->search;
-            return $q->where("title","like","%$search%")->orwhere("description","like","%$search%");
-        })->
-        with('user','category')->latest("id")->paginate(7);
+        if (Auth::user()->role == 0){
+            $articles = Article::when(isset(request()->search),function ($q){
+                $search = request()->search;
+                return $q->where("title","like","%$search%")->orwhere("description","like","%$search%");
+            })->
+            with('user','category')->latest("id")->paginate(7);
+        }else{
+            $articles = Article::when(isset(request()->search),function ($q){
+                $search = request()->search;
+                return $q->where("title","like","%$search%")->orwhere("description","like","%$search%");
+            })->where('user_id',Auth::id())
+            ->with('user','category')->latest("id")->paginate(7);
+        }
+
         return view("article.index",compact("articles"));
     }
 
@@ -55,7 +64,7 @@ class ArticleController extends Controller
         $article->category_id = $request->category;
         $article->save();
 
-        return redirect()->route('article.index')->with("message","New Article created successfully.");
+        return redirect()->route('article.index')->with("toast",["icon"=>"success","title"=>$article->title." created successfully"]);
     }
 
     /**
@@ -99,7 +108,7 @@ class ArticleController extends Controller
         $article->category_id = $request->category;
         $article->update();
 
-        return redirect()->route('article.index')->with("message","New Article updated successfully.");
+        return redirect()->route('article.index')->with("toast",["icon"=>"success","title"=>$article->title." updated successfully"]);
     }
 
     /**
@@ -111,6 +120,6 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
-        return redirect()->route("article.index",["page"=>request()->page])->with("message","Article deleted successfully.");
+        return redirect()->route("article.index",["page"=>request()->page])->with("toast",["icon"=>"success","title"=>$article->title." deleted successfully"]);
     }
 }

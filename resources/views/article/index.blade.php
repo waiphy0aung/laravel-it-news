@@ -47,7 +47,9 @@
                             <th>#</th>
                             <th>Article</th>
                             <th>Category</th>
+                            @if(Auth::user()->role == 0)
                             <th>Owner</th>
+                            @endif
                             <th>Controls</th>
                             <th>Created</th>
                         </tr>
@@ -62,14 +64,16 @@
                                     <small class="text-black-50">{{ Str::words($article->description,8) }}</small>
                                 </td>
                                 <td>{{ $article->category->title }}</td>
+                                @if(Auth::user()->role == 0)
                                 <td>{{ $article->user->name }}</td>
+                                @endif
                                 <td>
                                     <a href="{{ route("article.show",$article->id) }}" class="btn btn-outline-success"><i class="feather-info"></i> Show</a>
                                     <a href="{{ route("article.edit",$article->id) }}" class="btn btn-outline-primary"><i class="feather-edit"></i> Edit</a>
-                                    <form action="{{ route("article.destroy",[$article->id,"page"=>request()->page]) }}" method="post" class="d-inline-block">
+                                    <form action="{{ route("article.destroy",[$article->id,"page"=>request()->page]) }}" id="form{{ $article->id }}" method="post" class="d-inline-block">
                                         @csrf
                                         @method("delete")
-                                        <button class="btn btn-outline-danger" onclick="return confirm('Are you sure to delete this Article?')"><i class="feather-trash"></i> Delete</button>
+                                        <button type="button" class="btn btn-outline-danger" onclick="askConfirm({{ $article->id }})"><i class="feather-trash"></i> Delete</button>
                                     </form>
                                 </td>
                                 <td>
@@ -96,4 +100,30 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('foot')
+    <script>
+        function askConfirm(id){
+            Swal.fire({
+                title: 'Are you sure <br> to delete this Article?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'confirm'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Article Deleted!',
+                        'article has been deleted successfully',
+                        'success'
+                    )
+                    setTimeout(function (){
+                        $("#form"+id).submit();
+                    },500)
+                }
+            })
+        }
+    </script>
 @endsection

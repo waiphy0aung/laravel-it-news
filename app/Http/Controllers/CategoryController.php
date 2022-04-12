@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $category->user_id = Auth::id();
         $category->save();
 
-        return redirect()->route("category.index")->with("message","New Category created.");
+        return redirect()->route("category.index")->with("toast",["icon"=>"success","title"=>$category->title." is Added"]);
     }
 
     /**
@@ -84,7 +84,7 @@ class CategoryController extends Controller
 
         $category->title = $request->title;
         $category->update();
-        return redirect()->route("category.index")->with("message","Category updated.");
+        return redirect()->route("category.index")->with("toast",["icon"=>"success","title"=>$category->title." is Updated"]);
     }
 
     /**
@@ -96,6 +96,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route("category.index")->with("message","Category deleted.");
+        return redirect()->route("category.index")->with("toast",["icon"=>"success","title"=>$category->title." is Deleted"]);
     }
 }

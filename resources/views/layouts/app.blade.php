@@ -33,5 +33,12 @@
 
 <script src="{{ asset('js/app.js') }}"></script>
 @yield('foot')
+@auth
+{{--    @empty(Auth::user()->phone)--}}
+{{--        @include("user-profile.update-info")--}}
+{{--    @endempty--}}
+@endauth
+@include("layouts.toast")
+@include("layouts.alert")
 </body>
 </html>

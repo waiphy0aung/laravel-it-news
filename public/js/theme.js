@@ -28296,7 +28296,7 @@ try {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/wpa/WaiPhyoAung/it-news/resources/js/theme.js */"./resources/js/theme.js");
+module.exports = __webpack_require__(/*! /Users/wpa/Desktop/it-news/resources/js/theme.js */"./resources/js/theme.js");
 
 
 /***/ })
